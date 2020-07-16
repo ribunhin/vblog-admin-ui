@@ -1,30 +1,21 @@
 <template>
-    <div>
-        <div slot="main-header">
-            <el-header>
-                <img class="mlogo" src="https://www.markerhub.com/dist/images/logo/markerhub-logo.png" alt="">
-            </el-header>
-        </div>
-        <div slot="main-content">
-            <el-container class="m-login-container">
-                <el-form @submit.native.prevent :model="loginObj" :rules="loginRules" ref="loginForm" class="m-login-form">
-                    <div class="m-login-title-container">
-                        <h3 class="m-title"> 用户登录 </h3>
-                    </div>
-                    <el-form-item prop="username">
-                        <el-input prefix-icon="el-icon-user" v-model="loginObj.username"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="password">
-                        <el-input prefix-icon="el-icon-lock" type="password" v-model="loginObj.password"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-                        <el-button @click="resetForm('loginForm')">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-container>
-        </div>
-    </div>
+    <el-container class="m-login-container">
+        <el-form @submit.native.prevent :model="loginObj" :rules="loginRules" ref="loginForm" class="m-login-form">
+            <div class="m-login-title-container">
+                <h3 class="m-title"> 用户登录 </h3>
+            </div>
+            <el-form-item prop="username">
+                <el-input prefix-icon="el-icon-user" v-model="loginObj.username"></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input prefix-icon="el-icon-lock" type="password" v-model="loginObj.password"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+                <el-button @click="resetForm('loginForm')">重置</el-button>
+            </el-form-item>
+        </el-form>
+    </el-container>
 </template>
 
 <script>

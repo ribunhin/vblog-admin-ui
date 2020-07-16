@@ -1,15 +1,22 @@
 <template>
-    <el-container class="index-container">
-
-        <el-aside>
-            <div class="m-sidebar-main cover-red">
-                <sidebar ref="sidebar"/>
+    <el-container class="admin-container">
+        <el-header>
+            <div>
+                <img src="../assets/logo.png" alt="" class="logo_img">
+                <span>webblog后台管理</span>
             </div>
-        </el-aside>
+            <el-button type="info" @click="logout">退出</el-button>
+        </el-header>
 
-        <el-main>
-            <app-main ref="app-main"/>
-        </el-main>
+        <el-container>
+            <el-aside :width="isCollapse ? '64px':'200px'">
+                <div class="toggle-button" @click="toggleCollapase"><i :class="isCollapse ? 'el-icon-s-unfold':'el-icon-s-fold'"></i></div>
+                <Sidebar ref="sidebar" />
+            </el-aside>
+            <el-main>
+                <app-main ref="app-main" />
+            </el-main>
+        </el-container>
     </el-container>
 </template>
 
@@ -17,37 +24,82 @@
     import {AppMain, Sidebar} from './components'
 
     export default {
-        name: 'Layout',
         components: {
             AppMain,
             Sidebar,
+        },
+        data() {
+            return {
+                isCollapse: false,
+            }
+        },
+        methods: {
+            logout() {
+                const _this = this
+                _this.$axios.get('/user/logout', {
+                    headers: {
+                        'Authorization': localStorage.getItem('token')
+                    }
+                }).then(res => {
+                    _this.$store.commit('REMOVE_INFO')
+                    _this.$router.push('/login')
+                })
+            },
+            toggleCollapase() {
+                this.isCollapse = !this.isCollapse
+                this.$refs.sidebar.collapse(this.isCollapse)
+            },
         }
     }
 </script>
 
 <style lang="less" scoped>
 
-    .index-container {
-        position: relative;
+    .admin-container {
         height: 100%;
-        width: 100%;
+        .el-header {
+            background-color: #373d41;
+            display: flex;
+            padding-left: 0%;
+            justify-content: space-between; //左右贴边
+            align-items: center;
+            color: #ffffff;
+            font-size: 20px;
+
+            > div {
+                display: flex;
+                align-items: center;
+
+                span {
+                    margin-left: 15px;
+                }
+            }
+        }
+        .el-container {
+            height: calc(100% - 60px);
+        }
     }
+
+    .logo_img {
+        height: 100%;
+        width: 20%;
+    }
+
+
 
     .el-aside {
-        background: url(../assets/images/background-cover.jpg) top left no-repeat #666666;
-        background-size: cover;
+        background-color: #333744;
+        .el-menu {
+            border-right: 0;
+        }
     }
 
-    .m-sidebar-main {
-        display: table;
-        width: 100%;
-        height: 100%;
-    }
-
-    .cover-red {
-        background-color: rgba(119, 31, 18, 0.6);
-        background-image: -webkit-linear-gradient(-410deg, rgba(119, 31, 18, 0.6) 20%, rgba(30, 8, 5, 0.8));
-        background-image: linear-gradient(140deg, rgba(119, 31, 18, 0.6) 20%, rgba(30, 8, 5, 0.8));
+    .toggle-button {
+        background-color: #4A5064;
+        line-height: 28px;
+        text-align: center;
+        color: #909399;;
+        cursor: pointer;
     }
 
 </style>

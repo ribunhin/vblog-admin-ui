@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Layout from '../layout/index'
-import LayoutAdmin from  '../layout/admin'
+import Login from '../views/login'
+import Layout from  '../layout/index'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -14,95 +14,12 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/login',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'login',
-                component: () => import('@/views/login')
-            }
-        ]
-    },
-    {
-        path: '/',
-        component: Layout,
-        redirect: '/index',
-        children: [
-            {
-                path: 'index',
-                name: 'index',
-                component: () => import('@/views/index')
-            }
-        ]
-    },
-    {
-        path: '/blogs/:blogId',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'blogId',
-                component: () => import('@/views/blog')
-            }
-        ]
-    },
-    {
-        path: '/types',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'types',
-                component: () => import('@/views/types')
-            },
-            {
-                path: ':typeId',
-                name: 'typeId',
-                component: () => import('@/views/types')
-            }
-        ]
-    },
-    {
-        path: '/tags',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'tags',
-                component: () => import('@/views/tags')
-            },
-            {
-                path: ':tagId',
-                name: 'tagId',
-                component: () => import('@/views/tags')
-            }
-        ]
-    },
-    {
-        path: '/archives',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'archives',
-                component: () => import('@/views/archives')
-            }
-        ]
-    },
-    {
-        path: '/about',
-        component: Layout,
-        children: [
-            {
-                path: '',
-                name: 'about',
-                component: () => import('@/views/about')
-            }
-        ]
+        name: 'login',
+        component: Login,
     },
     {
         path: '/admin',
-        component: LayoutAdmin,
+        component: Layout,
         redirect: '/admin/index',
         children: [
             {
